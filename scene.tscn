@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://c45kjfv7lfn47"]
+[gd_scene load_steps=11 format=3 uid="uid://c45kjfv7lfn47"]
 
 [ext_resource type="Script" uid="uid://cbknj1xk2qchv" path="res://playerController.gd" id="1_ulcgi"]
 [ext_resource type="Shape3D" uid="uid://b52r1je4kbpem" path="res://floorShape.tres" id="2_nxogm"]
+[ext_resource type="Script" uid="uid://dpjfxc8ewyqiv" path="res://Police.gd" id="3_3253y"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_drvgu"]
 
@@ -52,3 +53,8 @@ transform = Transform3D(1, 0, 0, 0, 0.961846, 0.27359, 0, -0.27359, 0.961846, 0,
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_nxogm")
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+script = ExtResource("3_3253y")

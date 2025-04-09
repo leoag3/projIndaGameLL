@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://wqwvtvb26qs5"]
+
+[ext_resource type="Script" uid="uid://dicp8e1w542c0" path="res://start_menu.gd" id="1_d3352"]
+
+[sub_resource type="GDScript" id="GDScript_ufv5y"]
+script/source = "extends Button
+
+func _ready():
+	pass
+
+func _on_Start_pressed():
+	get_tree().change_scene(\"res://scene.tscn\")
+"
+
+[node name="StartMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+script = ExtResource("1_d3352")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -120.0
+offset_right = 382.0
+offset_bottom = -19.0
+grow_vertical = 0
+
+[node name="Start" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Play"
+script = SubResource("GDScript_ufv5y")
+
+[node name="Options" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
