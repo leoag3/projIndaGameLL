@@ -31,7 +31,7 @@ func _unhandled_input(event):
 			crouch()
 		else:
 			# Slam down mid-air
-			velocity.y = -jump_force * 2.0  # You can tweak this
+			velocity.y = -jump_force * 1.5 #Tweak for feel
 			wants_to_crouch_on_landing = true
 
 
