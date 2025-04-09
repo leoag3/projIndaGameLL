@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://c45kjfv7lfn47"]
 
-[ext_resource type="Script" uid="uid://cbknj1xk2qchv" path="res://playerController.gd" id="1_ulcgi"]
-[ext_resource type="Shape3D" uid="uid://b52r1je4kbpem" path="res://floorShape.tres" id="2_nxogm"]
+[ext_resource type="Script" uid="uid://cbknj1xk2qchv" path="res://playerController.gd" id="1_1kc1q"]
+[ext_resource type="Shape3D" uid="uid://b52r1je4kbpem" path="res://floorShape.tres" id="2_4msxo"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_drvgu"]
 
@@ -24,7 +24,7 @@ sky = SubResource("Sky_3253y")
 [node name="Node3D" type="Node3D"]
 
 [node name="Player" type="CharacterBody3D" parent="."]
-script = ExtResource("1_ulcgi")
+script = ExtResource("1_1kc1q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
 mesh = SubResource("CapsuleMesh_drvgu")
@@ -42,7 +42,7 @@ mesh = SubResource("BoxMesh_nxogm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
-shape = ExtResource("2_nxogm")
+shape = ExtResource("2_4msxo")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.0142763, 0.999898, 0, -0.999898, -0.0142763, 1.54802, 4.49695, 1.13692)
