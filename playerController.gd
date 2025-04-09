@@ -15,6 +15,7 @@ var jump_force := 8.0
 
 func _ready():
 	target_x = global_position.x
+	add_to_group("player")
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_left") and lane_index > -1:
@@ -78,3 +79,4 @@ func _physics_process(delta):
 	# Optional tilt effect
 	var tilt = clamp((target_x - global_position.x) * 0.1, -0.2, 0.2)
 	rotation.z = lerp(rotation.z, tilt, delta * 5)
+	global_position.z = original_position.z

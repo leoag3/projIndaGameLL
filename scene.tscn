@@ -1,7 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://c45kjfv7lfn47"]
+[gd_scene load_steps=12 format=3 uid="uid://c45kjfv7lfn47"]
 
 [ext_resource type="Script" uid="uid://cbknj1xk2qchv" path="res://playerController.gd" id="1_ulcgi"]
 [ext_resource type="Shape3D" uid="uid://b52r1je4kbpem" path="res://floorShape.tres" id="2_nxogm"]
+[ext_resource type="PackedScene" uid="uid://myiaq62iegj" path="res://obstacle.tscn" id="4_m7jmp"]
+[ext_resource type="Script" uid="uid://b04fcomka30sb" path="res://obstacle_manager.gd" id="4_u3cyc"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_drvgu"]
 
@@ -36,7 +38,7 @@ shape = SubResource("CapsuleShape3D_ulcgi")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.992375, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(10, 0, 0, 0, 0.15, 0, 0, 0, 10, 0, -0.439021, -16.421)
+transform = Transform3D(10, 0, 0, 0, 0.15, 0, 0, 0, 10, 0, -0.439021, 12.0183)
 material_override = SubResource("StandardMaterial3D_ulcgi")
 mesh = SubResource("BoxMesh_nxogm")
 
@@ -48,7 +50,12 @@ shape = ExtResource("2_nxogm")
 transform = Transform3D(1, 0, 0, 0, -0.0142763, 0.999898, 0, -0.999898, -0.0142763, 1.54802, 4.49695, 1.13692)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.961846, 0.27359, 0, -0.27359, 0.961846, 0, 2.95115, 3.55729)
+transform = Transform3D(-0.999925, -0.0105757, -0.00611634, -0.0117496, 0.969631, 0.24429, 0.00334705, 0.244344, -0.969682, 0, 2.951, -3.783)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_nxogm")
+
+[node name="ObstacleManager" type="Node3D" parent="."]
+script = ExtResource("4_u3cyc")
+obstacle_scene = ExtResource("4_m7jmp")
+player_path = NodePath("../Player")
