@@ -1,7 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://c45kjfv7lfn47"]
+[gd_scene load_steps=12 format=3 uid="uid://c45kjfv7lfn47"]
 
 [ext_resource type="Script" uid="uid://cbknj1xk2qchv" path="res://playerController.gd" id="1_1kc1q"]
+[ext_resource type="Script" uid="uid://blvj7i720ee3m" path="res://scenes/Menu scripts/sceneScript.gd" id="1_5fb3c"]
 [ext_resource type="Shape3D" uid="uid://b52r1je4kbpem" path="res://floorShape.tres" id="2_4msxo"]
+[ext_resource type="AudioStream" uid="uid://bah6fscrpdadt" path="res://Audio/Music/SubMidgame.mp3" id="3_4msxo"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_drvgu"]
 
@@ -22,6 +24,7 @@ background_mode = 2
 sky = SubResource("Sky_3253y")
 
 [node name="Node3D" type="Node3D"]
+script = ExtResource("1_5fb3c")
 
 [node name="Player" type="CharacterBody3D" parent="."]
 script = ExtResource("1_1kc1q")
@@ -52,3 +55,8 @@ transform = Transform3D(1, 0, 0, 0, 0.961846, 0.27359, 0, -0.27359, 0.961846, 0,
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_nxogm")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_4msxo")
+autoplay = true
+bus = &"Music"
