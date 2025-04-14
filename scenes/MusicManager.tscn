@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://dv4magcuq63xx"]
+
+[ext_resource type="AudioStream" uid="uid://dyxakmcjbk0rr" path="res://Audio/Music/Subupbeat.mp3" id="1_mvbrv"]
+[ext_resource type="Script" uid="uid://bbn8fmxe2fx2h" path="res://scenes/Menu scripts/music_manager.gd" id="1_ppk7c"]
+[ext_resource type="AudioStream" uid="uid://bah6fscrpdadt" path="res://Audio/Music/SubMidgame.mp3" id="2_ppk7c"]
+
+[node name="Node" type="Node"]
+script = ExtResource("1_ppk7c")
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_mvbrv")
+bus = &"Music"
+
+[node name="GameMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_ppk7c")
+volume_db = -50.594
+bus = &"Music"

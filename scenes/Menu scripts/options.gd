@@ -4,6 +4,7 @@ extends Control
 @onready var sfx_slider = $VBoxContainer/SFXSlider
 
 func _ready():
+	MusicManager.play_menu_music()
 	# Load saved values from Settings singleton
 	music_slider.value = Settings.music_volume * 100
 	sfx_slider.value = Settings.sfx_volume * 100
@@ -13,6 +14,7 @@ func _ready():
 
 	# Immediately apply volume (in case it's 50% etc)
 	update_volumes()
+	
 
 func _on_return_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/StartMenu.tscn")
