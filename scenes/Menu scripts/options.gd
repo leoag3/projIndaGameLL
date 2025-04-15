@@ -5,37 +5,27 @@ extends Control
 
 func _ready():
 	MusicManager.play_menu_music()
-	# Load saved values from Settings singleton
+	# Initialize sliders with current values
 	music_slider.value = Settings.music_volume * 100
 	sfx_slider.value = Settings.sfx_volume * 100
-	# Connect value change signals
-	music_slider.value_changed.connect(_on_volume_music_changed)
-	sfx_slider.value_changed.connect(_on_volume_sound_changed)
+	music_slider.value_changed.connect(_on_music_changed)
+	sfx_slider.value_changed.connect(_on_sfx_changed)
 
-	# Immediately apply volume (in case it's 50% etc)
-	update_volumes()
-	
-
-func _on_return_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/StartMenu.tscn")
-
-
-func _on_volume_music_changed(value) -> void:
+func _on_music_changed(value: float):
 	Settings.music_volume = value / 100.0
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(Settings.music_volume))
-
-
-func _on_volume_sound_changed(value) -> void:
-	Settings.sfx_volume = value / 100.0
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(Settings.sfx_volume))
-
-
-func update_volumes():
 	AudioServer.set_bus_volume_db(
 		AudioServer.get_bus_index("Music"),
 		linear_to_db(Settings.music_volume)
 	)
+
+func _on_sfx_changed(value: float):
+	Settings.sfx_volume = value / 100.0
 	AudioServer.set_bus_volume_db(
 		AudioServer.get_bus_index("SFX"),
 		linear_to_db(Settings.sfx_volume)
 	)
+
+
+func _on_return_pressed():
+	Settings.save_settings()  # Save only when exiting options
+	get_tree().change_scene_to_file("res://scenes/StartMenu.tscn")
