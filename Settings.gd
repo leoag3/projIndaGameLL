@@ -27,7 +27,7 @@ func load_settings() -> void:
 		save_settings()
 	update_audio_servers()
 
-func update_audio_servers() -> void:
+func update_audio_servers() -> void: # Update to the different audio buses
 	AudioServer.set_bus_volume_db(
 		AudioServer.get_bus_index("Music"),
 		linear_to_db(music_volume)
