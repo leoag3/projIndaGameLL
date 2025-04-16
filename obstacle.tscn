@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://myiaq62iegj"]
+
+[ext_resource type="Script" uid="uid://ch6u174d4ipem" path="res://obstacle.gd" id="1_sl1jc"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_u3cyc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m7jmp"]
+size = Vector3(10, 3, 2)
+
+[node name="Obstacle" type="StaticBody3D"]
+script = ExtResource("1_sl1jc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-07, 0, 2, 0, 3, 0, -10, 0, -8.74228e-08, 0, 0, 0)
+mesh = SubResource("BoxMesh_u3cyc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+shape = SubResource("BoxShape3D_m7jmp")

@@ -38,7 +38,7 @@ shape = SubResource("CapsuleShape3D_ulcgi")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.992375, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(10, 0, 0, 0, 0.15, 0, 0, 0, 10, 0, -0.439021, 12.0183)
+transform = Transform3D(10, 0, 0, 0, 0.15, 0, 0, 0, 10, 0, -0.439021, -20.7988)
 material_override = SubResource("StandardMaterial3D_ulcgi")
 mesh = SubResource("BoxMesh_nxogm")
 
@@ -50,7 +50,7 @@ shape = ExtResource("2_nxogm")
 transform = Transform3D(1, 0, 0, 0, -0.0142763, 0.999898, 0, -0.999898, -0.0142763, 1.54802, 4.49695, 1.13692)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.999925, -0.0105757, -0.00611634, -0.0117496, 0.969631, 0.24429, 0.00334705, 0.244344, -0.969682, 0, 2.951, -3.783)
+transform = Transform3D(1, 0, 0, 0, 0.902526, 0.430637, 0, -0.430637, 0.902524, 0, 4.22934, 3.59983)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_nxogm")
@@ -58,4 +58,3 @@ environment = SubResource("Environment_nxogm")
 [node name="ObstacleManager" type="Node3D" parent="."]
 script = ExtResource("4_u3cyc")
 obstacle_scene = ExtResource("4_m7jmp")
-player_path = NodePath("../Player")
