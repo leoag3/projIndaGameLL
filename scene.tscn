@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c45kjfv7lfn47"]
+[gd_scene load_steps=9 format=3 uid="uid://c45kjfv7lfn47"]
 
 [ext_resource type="Script" uid="uid://cbknj1xk2qchv" path="res://playerController.gd" id="1_ulcgi"]
 [ext_resource type="Shape3D" uid="uid://b52r1je4kbpem" path="res://floorShape.tres" id="2_nxogm"]
@@ -13,15 +13,6 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_nxogm"]
 size = Vector3(1, 1, 5)
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nxogm"]
-
-[sub_resource type="Sky" id="Sky_3253y"]
-sky_material = SubResource("ProceduralSkyMaterial_nxogm")
-
-[sub_resource type="Environment" id="Environment_nxogm"]
-background_mode = 2
-sky = SubResource("Sky_3253y")
 
 [node name="Node3D" type="Node3D"]
 
@@ -51,9 +42,6 @@ transform = Transform3D(1, 0, 0, 0, -0.0142763, 0.999898, 0, -0.999898, -0.01427
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.902526, 0.430637, 0, -0.430637, 0.902524, 0, 4.22934, 3.59983)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_nxogm")
 
 [node name="ObstacleManager" type="Node3D" parent="."]
 script = ExtResource("4_u3cyc")
