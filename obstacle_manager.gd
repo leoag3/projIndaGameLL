@@ -23,8 +23,8 @@ func spawn_obstacle():
 	add_child(instance)
 
 	# Set spawn position in one of the lanes, far down the Z axis (opposite direction)
-	var position = Vector3(lane * lane_offset, 0, spawn_distance)
-	instance.global_position = position
+	var pos = Vector3(lane * lane_offset, 0, spawn_distance)
+	instance.global_position = pos
 
 	# Give the obstacle a script or velocity to move toward the player
 	if instance.has_method("set_speed"):
