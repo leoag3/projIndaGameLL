@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://blvj7i720ee3m" path="res://scenes/Menu scripts/sceneScript.gd" id="1_5fb3c"]
 [ext_resource type="AudioStream" uid="uid://bah6fscrpdadt" path="res://Audio/Music/SubMidgame.mp3" id="3_4msxo"]
 [ext_resource type="Script" uid="uid://b04fcomka30sb" path="res://ObstacleHandling/obstacle_manager.gd" id="4_u3cyc"]
-[ext_resource type="PackedScene" uid="uid://budws5d3f37jn" path="res://scenes/obstacle.tscn" id="5_gjmho"]
+[ext_resource type="PackedScene" uid="uid://budws5d3f37jn" path="res://ObstacleHandling/obstacle.tscn" id="5_gjmho"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_drvgu"]
 
@@ -16,6 +16,7 @@
 size = Vector3(1, 1, 5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gjmho"]
+size = Vector3(10, 0.2, 50)
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_5fb3c")
