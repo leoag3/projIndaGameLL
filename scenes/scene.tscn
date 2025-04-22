@@ -1,11 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://c45kjfv7lfn47"]
 
-[ext_resource type="Script" uid="uid://cbknj1xk2qchv" path="res://playerController.gd" id="1_1kc1q"]
+[ext_resource type="Script" uid="uid://cbknj1xk2qchv" path="res://Player/playerController.gd" id="1_1kc1q"]
 [ext_resource type="Script" uid="uid://blvj7i720ee3m" path="res://scenes/Menu scripts/sceneScript.gd" id="1_5fb3c"]
-[ext_resource type="Shape3D" uid="uid://b52r1je4kbpem" path="res://floorShape.tres" id="2_4msxo"]
 [ext_resource type="AudioStream" uid="uid://bah6fscrpdadt" path="res://Audio/Music/SubMidgame.mp3" id="3_4msxo"]
-[ext_resource type="PackedScene" uid="uid://myiaq62iegj" path="res://obstacle.tscn" id="4_m7jmp"]
-[ext_resource type="Script" uid="uid://b04fcomka30sb" path="res://obstacle_manager.gd" id="4_u3cyc"]
+[ext_resource type="Script" uid="uid://b04fcomka30sb" path="res://ObstacleHandling/obstacle_manager.gd" id="4_u3cyc"]
+[ext_resource type="PackedScene" uid="uid://budws5d3f37jn" path="res://scenes/obstacle.tscn" id="5_gjmho"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_drvgu"]
 
@@ -15,6 +14,8 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_nxogm"]
 size = Vector3(1, 1, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gjmho"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_5fb3c")
@@ -37,8 +38,8 @@ material_override = SubResource("StandardMaterial3D_ulcgi")
 mesh = SubResource("BoxMesh_nxogm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
-shape = ExtResource("2_4msxo")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.054, -0.439, -20.799)
+shape = SubResource("BoxShape3D_gjmho")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.0142763, 0.999898, 0, -0.999898, -0.0142763, 1.54802, 4.49695, 1.13692)
@@ -53,4 +54,4 @@ bus = &"Music"
 
 [node name="ObstacleManager" type="Node3D" parent="."]
 script = ExtResource("4_u3cyc")
-obstacle_scene = ExtResource("4_m7jmp")
+obstacle_scene = ExtResource("5_gjmho")
