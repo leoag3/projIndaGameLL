@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://myiaq62iegj"]
+
+[ext_resource type="Script" uid="uid://ch6u174d4ipem" path="res://obstacle.gd" id="1_sl1jc"]
+[ext_resource type="Shader" uid="uid://6mve25bitqi6" path="res://obstacle.gdshader" id="2_aubd6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vcivv"]
+shader = ExtResource("2_aubd6")
+shader_parameter/bend_strength = 0.3
+
+[sub_resource type="BoxMesh" id="BoxMesh_u3cyc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m7jmp"]
+size = Vector3(10, 3, 2)
+
+[node name="Obstacle" type="StaticBody3D"]
+script = ExtResource("1_sl1jc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-07, 0, 2, 0, 3, 0, -10, 0, -8.74228e-08, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_vcivv")
+mesh = SubResource("BoxMesh_u3cyc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+shape = SubResource("BoxShape3D_m7jmp")
