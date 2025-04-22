@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://c45kjfv7lfn47"]
+[gd_scene load_steps=12 format=3 uid="uid://c45kjfv7lfn47"]
 
 [ext_resource type="Script" uid="uid://cbknj1xk2qchv" path="res://Player/playerController.gd" id="1_1kc1q"]
 [ext_resource type="Script" uid="uid://blvj7i720ee3m" path="res://scenes/Menu scripts/sceneScript.gd" id="1_5fb3c"]
 [ext_resource type="AudioStream" uid="uid://bah6fscrpdadt" path="res://Audio/Music/SubMidgame.mp3" id="3_4msxo"]
 [ext_resource type="Script" uid="uid://b04fcomka30sb" path="res://ObstacleHandling/obstacle_manager.gd" id="4_u3cyc"]
 [ext_resource type="PackedScene" uid="uid://budws5d3f37jn" path="res://ObstacleHandling/obstacle.tscn" id="5_gjmho"]
+[ext_resource type="Script" uid="uid://bfyb5lbqbq0rg" path="res://scenes/Camera scripts/camera_3d.gd" id="6_t7and"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_drvgu"]
 
@@ -45,9 +46,6 @@ shape = SubResource("BoxShape3D_gjmho")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.0142763, 0.999898, 0, -0.999898, -0.0142763, 1.54802, 4.49695, 1.13692)
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.902526, 0.430637, 0, -0.430637, 0.902524, 0, 4.22934, 3.59983)
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_4msxo")
 autoplay = true
@@ -56,3 +54,9 @@ bus = &"Music"
 [node name="ObstacleManager" type="Node3D" parent="."]
 script = ExtResource("4_u3cyc")
 obstacle_scene = ExtResource("5_gjmho")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.922194, 0.386727, 0, -0.386727, 0.922194, 0, 0, 0)
+script = ExtResource("6_t7and")
+player_path = NodePath("../Player")
+fixed_offset = Vector3(0, 3.571, 3.905)
