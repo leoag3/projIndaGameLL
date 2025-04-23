@@ -1,20 +1,26 @@
-[gd_scene load_steps=15 format=3 uid="uid://c45kjfv7lfn47"]
+[gd_scene load_steps=18 format=3 uid="uid://c45kjfv7lfn47"]
 
 [ext_resource type="Script" uid="uid://cbknj1xk2qchv" path="res://Player/playerController.gd" id="1_1kc1q"]
 [ext_resource type="Script" uid="uid://blvj7i720ee3m" path="res://scenes/Menu scripts/sceneScript.gd" id="1_5fb3c"]
 [ext_resource type="AudioStream" uid="uid://bah6fscrpdadt" path="res://Audio/Music/SubMidgame.mp3" id="3_4msxo"]
 [ext_resource type="Animation" uid="uid://bcck04bukb4g4" path="res://Player/Animations/Running.tres" id="3_tpwpp"]
+[ext_resource type="Animation" uid="uid://3cc8b40yfyt7" path="res://Player/Animations/Jump.tres" id="4_5yiy0"]
 [ext_resource type="PackedScene" uid="uid://blm57oy3m0ua4" path="res://Player/character_model.tscn" id="4_7ftgl"]
 [ext_resource type="Script" uid="uid://b04fcomka30sb" path="res://ObstacleHandling/obstacle_manager.gd" id="4_u3cyc"]
+[ext_resource type="Animation" uid="uid://dnbxu1eipvtn0" path="res://Player/Animations/Running_slide.tres" id="5_0f71q"]
 [ext_resource type="PackedScene" uid="uid://budws5d3f37jn" path="res://ObstacleHandling/train.tscn" id="5_gjmho"]
 [ext_resource type="PackedScene" uid="uid://dmba2rbs8q2n0" path="res://ObstacleHandling/ramp.tscn" id="5_t7and"]
+[ext_resource type="Animation" uid="uid://wsj6gdyd80gi" path="res://Player/Animations/Running_slow.tres" id="6_1id6j"]
 [ext_resource type="Script" uid="uid://bfyb5lbqbq0rg" path="res://scenes/Camera scripts/camera_3d.gd" id="6_t7and"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ulcgi"]
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dqloj"]
 _data = {
-&"Running": ExtResource("3_tpwpp")
+&"Jump": ExtResource("4_5yiy0"),
+&"Running": ExtResource("3_tpwpp"),
+&"Running_slide": ExtResource("5_0f71q"),
+&"Running_slow": ExtResource("6_1id6j")
 }
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ulcgi"]
@@ -41,10 +47,9 @@ shape = SubResource("CapsuleShape3D_ulcgi")
 libraries = {
 &"character_anims": SubResource("AnimationLibrary_dqloj")
 }
-autoplay = "character_anims/Running"
 
 [node name="Skeleton3D" parent="Player/AnimatedVisuals" instance=ExtResource("4_7ftgl")]
-transform = Transform3D(-1.3, 0, -1.96295e-07, 0, 1.3, 0, 1.96295e-07, 0, -1.3, 0, -0.959856, 0)
+transform = Transform3D(-1.3, 0, -1.96295e-07, 0, 1.3, 0, 1.96295e-07, 0, -1.3, 0, -1, 0)
 bones/0/position = Vector3(0.00458059, 0.911833, 0.000990221)
 bones/0/rotation = Quaternion(0.0680921, -0.0548361, -0.0216207, 0.995936)
 bones/1/rotation = Quaternion(0.0877114, 0.125552, 0.0161225, 0.988071)

@@ -1,5 +1,11 @@
 extends CharacterBody3D
 
+@onready var anim_player = $AnimatedVisuals/AnimationPlayer # Animations
+@onready var animated_model = $AnimatedVisuals/Model
+
+enum State { RUN, JUMP, SLIDE }
+var current_state = State.RUN
+
 var lane_offset := 3.0
 var lane_index := 0
 var target_x := 0.0
@@ -16,6 +22,7 @@ var jump_force := 8.0
 func _ready():
 	target_x = global_position.x
 	add_to_group("player")
+	anim_player.play("character_anims/Running")  # Start with running animation
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_left") and lane_index > -1:
@@ -27,9 +34,11 @@ func _unhandled_input(event):
 	elif event.is_action_pressed("ui_up") and is_on_floor():
 		uncrouch()  # Exit crouch if jumping
 		velocity.y = jump_force
+		play_animation("character_anims/Jump")  # Trigger jump animation
 	elif event.is_action_pressed("ui_down"):
 		if is_on_floor():
 			crouch()
+			play_animation("character_anims/Running_slide")  # Trigger slide animation
 		else:
 			# Slam down mid-air
 			velocity.y = -jump_force * 1.5 #Tweak for feel
@@ -74,9 +83,12 @@ func _physics_process(delta):
 			crouch()
 			wants_to_crouch_on_landing = false
 	# Apply velocity with built-in movement
+	if is_on_floor() and not is_crouching and anim_player.current_animation != "character_anims/Running":
+		play_animation("character_anims/Running")
+		
 	move_and_slide()
 
-	# Optional tilt effect
-	var tilt = clamp((target_x - global_position.x) * 0.1, -0.2, 0.2)
-	rotation.z = lerp(rotation.z, tilt, delta * 5)
-	global_position.z = original_position.z
+
+func play_animation(anim_name: String):
+	if anim_player.current_animation != anim_name:
+		anim_player.play(anim_name)
