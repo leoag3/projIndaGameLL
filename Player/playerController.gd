@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@onready var anim_player = $AnimatedVisuals/AnimationPlayer # Animations
+@onready var anim_player = $AnimatedVisuals/CharacterFix/AnimationPlayer # Animations
 @onready var animated_model = $AnimatedVisuals/Model
 
 enum AnimState { RUNNING, JUMPING, SLIDING }
@@ -21,9 +21,14 @@ var gravity := 20.0
 var jump_force := 8.0
 
 func _ready():
+	print("Available animations: ", $AnimatedVisuals/CharacterFix/AnimationPlayer.get_animation_list())
 	target_x = global_position.x
 	add_to_group("player")
-	anim_player.play("character_anims/Running")  # Start with running animation
+	var anim_player = $AnimatedVisuals/CharacterFix/AnimationPlayer
+	var run_anim = anim_player.get_animation("Running")
+	run_anim.loop_mode = Animation.LOOP_LINEAR  # Force looping
+	anim_player.play("Running")  # Test immediately
+	#$AnimatedVisuals/CharacterFix/AnimationPlayer.play("Running")  # Start with running animation
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_left") and lane_index > -1:
@@ -36,12 +41,12 @@ func _unhandled_input(event):
 		uncrouch()  # Exit crouch if jumping
 		velocity.y = jump_force
 		current_anim_state = AnimState.JUMPING
-		play_animation("character_anims/Jump")  # Trigger jump animation
+		$AnimatedVisuals/CharacterFix/AnimationPlayer.play("Jump")  # Trigger jump animation
 	elif event.is_action_pressed("ui_down"):
 		if is_on_floor():
 			crouch()
 			current_anim_state = AnimState.SLIDING
-			play_animation("character_anims/Running_slide")  # Trigger slide animation
+			$AnimatedVisuals/CharacterFix/AnimationPlayer.play("Sliding")  # Trigger slide animation
 		else:
 			# Slam down mid-air
 			velocity.y = -jump_force * 1.5 #Tweak for feel
@@ -94,23 +99,26 @@ func handle_animation_states():
 	if !is_on_floor():
 		was_in_air = true
 		if current_anim_state != AnimState.JUMPING:
-			play_animation("character_anims/Jump")
+			$AnimatedVisuals/CharacterFix/AnimationPlayer.play("Jump")
 			current_anim_state = AnimState.JUMPING
 	else:
 		if was_in_air:
 			# Just landed
-			play_animation("character_anims/Running")
+			$AnimatedVisuals/CharacterFix/AnimationPlayer.play("Running")
 			current_anim_state = AnimState.RUNNING
 			was_in_air = false  
 		if is_crouching:
 			if current_anim_state != AnimState.SLIDING:
-				play_animation("character_anims/Running_slide")
+				$AnimatedVisuals/CharacterFix/AnimationPlayer.play("Sliding")
 				current_anim_state = AnimState.SLIDING
 		else:
 			if current_anim_state != AnimState.RUNNING:
-				play_animation("character_anims/Running")
+				$AnimatedVisuals/CharacterFix/AnimationPlayer.play("Slow Running")
 				current_anim_state = AnimState.RUNNING
 
 func play_animation(anim_name: String):
 	if anim_player.current_animation != anim_name:
 		anim_player.play(anim_name)
+		# Force loop mode for running
+		if anim_name == "Running":
+			anim_player.get_animation(anim_name).loop_mode = Animation.LOOP_LINEAR
