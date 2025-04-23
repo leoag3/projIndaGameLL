@@ -21,14 +21,12 @@ var gravity := 20.0
 var jump_force := 8.0
 
 func _ready():
-	print("Available animations: ", $AnimatedVisuals/CharacterFix/AnimationPlayer.get_animation_list())
 	target_x = global_position.x
 	add_to_group("player")
 	var anim_player = $AnimatedVisuals/CharacterFix/AnimationPlayer
 	var run_anim = anim_player.get_animation("Running")
 	run_anim.loop_mode = Animation.LOOP_LINEAR  # Force looping
 	anim_player.play("Running")  # Test immediately
-	#$AnimatedVisuals/CharacterFix/AnimationPlayer.play("Running")  # Start with running animation
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_left") and lane_index > -1:
@@ -56,23 +54,23 @@ func _unhandled_input(event):
 func crouch():
 	if not is_crouching:
 		is_crouching = true
-		original_position = global_position
-		scale.y = 0.5
-		global_position.y -= 0.5  # Adjust down to stay on the floor (tweak if needed)
-
+		# Only modify collision
+		$CollisionShape3D.shape.height *= 0.5  # Halve hitbox height
+		$CollisionShape3D.position.y -= 0.5  # Lower hitbox center
+		
 		# Start crouch timer
 		crouch_timer = get_tree().create_timer(1.0)
 		crouch_timer.timeout.connect(uncrouch)
 
 func uncrouch():
 	if is_crouching:
-		scale.y = 1.0
-		global_position.y = original_position.y
+		# Restore original collision
+		$CollisionShape3D.shape.height *= 2.0
+		$CollisionShape3D.position.y += 0.5
 		is_crouching = false
-
+		
 		if crouch_timer:
-			crouch_timer.disconnect("timeout", uncrouch)
-			crouch_timer = null
+			crouch_timer.timeout.disconnect(uncrouch)
 
 func _physics_process(delta):
 	# Smooth horizontal lane movement
@@ -113,7 +111,7 @@ func handle_animation_states():
 				current_anim_state = AnimState.SLIDING
 		else:
 			if current_anim_state != AnimState.RUNNING:
-				$AnimatedVisuals/CharacterFix/AnimationPlayer.play("Slow Running")
+				$AnimatedVisuals/CharacterFix/AnimationPlayer.play("Running")
 				current_anim_state = AnimState.RUNNING
 
 func play_animation(anim_name: String):
@@ -122,3 +120,5 @@ func play_animation(anim_name: String):
 		# Force loop mode for running
 		if anim_name == "Running":
 			anim_player.get_animation(anim_name).loop_mode = Animation.LOOP_LINEAR
+		if anim_name == "Slide":
+			anim_player.queue("Run")  # Return to running after slide
