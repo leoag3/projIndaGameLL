@@ -3,8 +3,9 @@ extends CharacterBody3D
 @onready var anim_player = $AnimatedVisuals/AnimationPlayer # Animations
 @onready var animated_model = $AnimatedVisuals/Model
 
-enum State { RUN, JUMP, SLIDE }
-var current_state = State.RUN
+enum AnimState { RUNNING, JUMPING, SLIDING }
+var current_anim_state = AnimState.RUNNING
+var was_in_air := false
 
 var lane_offset := 3.0
 var lane_index := 0
@@ -34,10 +35,12 @@ func _unhandled_input(event):
 	elif event.is_action_pressed("ui_up") and is_on_floor():
 		uncrouch()  # Exit crouch if jumping
 		velocity.y = jump_force
+		current_anim_state = AnimState.JUMPING
 		play_animation("character_anims/Jump")  # Trigger jump animation
 	elif event.is_action_pressed("ui_down"):
 		if is_on_floor():
 			crouch()
+			current_anim_state = AnimState.SLIDING
 			play_animation("character_anims/Running_slide")  # Trigger slide animation
 		else:
 			# Slam down mid-air
@@ -83,11 +86,30 @@ func _physics_process(delta):
 			crouch()
 			wants_to_crouch_on_landing = false
 	# Apply velocity with built-in movement
-	if is_on_floor() and not is_crouching and anim_player.current_animation != "character_anims/Running":
-		play_animation("character_anims/Running")
 		
 	move_and_slide()
+	handle_animation_states()
 
+func handle_animation_states():
+	if !is_on_floor():
+		was_in_air = true
+		if current_anim_state != AnimState.JUMPING:
+			play_animation("character_anims/Jump")
+			current_anim_state = AnimState.JUMPING
+	else:
+		if was_in_air:
+			# Just landed
+			play_animation("character_anims/Running")
+			current_anim_state = AnimState.RUNNING
+			was_in_air = false  
+		if is_crouching:
+			if current_anim_state != AnimState.SLIDING:
+				play_animation("character_anims/Running_slide")
+				current_anim_state = AnimState.SLIDING
+		else:
+			if current_anim_state != AnimState.RUNNING:
+				play_animation("character_anims/Running")
+				current_anim_state = AnimState.RUNNING
 
 func play_animation(anim_name: String):
 	if anim_player.current_animation != anim_name:
