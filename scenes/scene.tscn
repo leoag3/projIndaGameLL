@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c45kjfv7lfn47"]
+[gd_scene load_steps=14 format=3 uid="uid://c45kjfv7lfn47"]
 
 [ext_resource type="Script" uid="uid://cbknj1xk2qchv" path="res://Player/playerController.gd" id="1_1kc1q"]
 [ext_resource type="Script" uid="uid://blvj7i720ee3m" path="res://scenes/Menu scripts/sceneScript.gd" id="1_5fb3c"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://budws5d3f37jn" path="res://ObstacleHandling/train.tscn" id="6_7182s"]
 [ext_resource type="Script" uid="uid://bfyb5lbqbq0rg" path="res://scenes/Camera scripts/camera_3d.gd" id="6_t7and"]
 [ext_resource type="PackedScene" uid="uid://dmba2rbs8q2n0" path="res://ObstacleHandling/ramp.tscn" id="7_tpwpp"]
+[ext_resource type="PackedScene" uid="uid://emcv7lbr3h5m" path="res://ObstacleHandling/roadblock.tscn" id="8_tpwpp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ulcgi"]
 
@@ -58,6 +59,7 @@ bus = &"Music"
 script = ExtResource("4_u3cyc")
 cart_scene = ExtResource("6_7182s")
 ramp_scene = ExtResource("7_tpwpp")
+roadblock_scene = ExtResource("8_tpwpp")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.922194, 0.386727, 0, -0.386727, 0.922194, 0, 0, 0)
