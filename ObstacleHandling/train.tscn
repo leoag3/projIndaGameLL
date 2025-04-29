@@ -1,13 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://budws5d3f37jn"]
 
 [ext_resource type="Script" uid="uid://ch6u174d4ipem" path="res://ObstacleHandling/obstacle.gd" id="1_8laee"]
+[ext_resource type="Material" uid="uid://b23dna3mh5lka" path="res://Materials/metal/metalplate.tres" id="2_7racv"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_u3cyc"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qpj5o"]
-albedo_color = Color(0.289433, 0.352346, 0.499454, 1)
-metallic = 0.76
-roughness = 0.52
+[sub_resource type="BoxMesh" id="BoxMesh_7racv"]
+size = Vector3(12, 3.6, 2.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_m7jmp"]
 size = Vector3(12, 3.6, 2.5)
@@ -16,9 +13,9 @@ size = Vector3(12, 3.6, 2.5)
 script = ExtResource("1_8laee")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(-5.24537e-07, 0, 2.5, 0, 3.6, 0, -12, 0, -1.09278e-07, 0, 1.8, 0)
-mesh = SubResource("BoxMesh_u3cyc")
-surface_material_override/0 = SubResource("StandardMaterial3D_qpj5o")
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.80809, 0.0118437)
+material_override = ExtResource("2_7racv")
+mesh = SubResource("BoxMesh_7racv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.8, 0)
