@@ -1,7 +1,6 @@
 extends CharacterBody3D
 
 @onready var anim_player = $AnimatedVisuals/CharacterFix/AnimationPlayer # Animations
-@onready var animated_model = $AnimatedVisuals/Model
 
 enum AnimState { RUNNING, JUMPING, SLIDING }
 var current_anim_state = AnimState.RUNNING
@@ -23,7 +22,6 @@ var jump_force := 8.0
 func _ready():
 	target_x = global_position.x
 	add_to_group("player")
-	var anim_player = $AnimatedVisuals/CharacterFix/AnimationPlayer
 	var run_anim = anim_player.get_animation("Running")
 	run_anim.loop_mode = Animation.LOOP_LINEAR  # Force looping
 	anim_player.play("Running")  # Test immediately
