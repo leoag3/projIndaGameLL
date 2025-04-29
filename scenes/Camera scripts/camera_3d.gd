@@ -9,7 +9,7 @@ var player: Node3D
 func _ready():
 	player = get_node(player_path)
 
-func _process(delta):
+func _process(_delta):
 	if player == null:
 		return
 
