@@ -9,6 +9,7 @@ func _ready():
 func unpause():
 	get_tree().paused = false
 	hide()
+	get_viewport().set_input_as_handled()
 
 func go_to_main_menu():
 	get_tree().paused = false  # Important!
@@ -17,3 +18,7 @@ func go_to_main_menu():
 func restart_level():
 	get_tree().paused = false
 	get_tree().reload_current_scene()
+
+func _input(event):
+	if visible and event.is_action_pressed("ui_cancel"):  # Escape key by default
+		unpause()

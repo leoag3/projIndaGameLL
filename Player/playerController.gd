@@ -34,13 +34,8 @@ func _ready():
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_cancel"):  # Escape key by default
-		if get_tree().paused:
-			get_tree().paused = false
-			$PauseMenu.unpause()
-		else:
-			get_tree().paused = true
-			$PauseMenu.show()
-			$AnimatedVisuals/CharacterFix/AnimationPlayer.pause()
+		get_tree().paused = !get_tree().paused
+		$PauseMenu.visible = get_tree().paused
 	if event.is_action_pressed("ui_left") and lane_index > -1:
 		lane_index -= 1
 		target_x = lane_index * lane_offset
