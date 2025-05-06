@@ -2,6 +2,9 @@ extends CharacterBody3D
 
 @onready var anim_player = $AnimatedVisuals/CharacterFix/AnimationPlayer # Animations
 
+const FLOOR_Y_POSITION := 0.561
+const SAFETY_MARGIN := 0.1
+
 enum AnimState { RUNNING, JUMPING, SLIDING }
 var current_anim_state = AnimState.RUNNING
 var was_in_air := false
@@ -89,6 +92,11 @@ func _physics_process(delta):
 	# Apply velocity with built-in movement
 		
 	move_and_slide()
+	
+	if global_position.y < FLOOR_Y_POSITION:
+		global_position.y = FLOOR_Y_POSITION + SAFETY_MARGIN
+		velocity.y = 0
+	
 	handle_animation_states()
 
 func handle_animation_states():

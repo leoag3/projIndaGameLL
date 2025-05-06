@@ -44,7 +44,7 @@ material_override = SubResource("StandardMaterial3D_ulcgi")
 mesh = SubResource("BoxMesh_nxogm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.054, -0.439, -20.799)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.054, -0.439, 3.20317)
 shape = SubResource("BoxShape3D_gjmho")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
