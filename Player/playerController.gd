@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 @onready var anim_player = $AnimatedVisuals/CharacterFix/AnimationPlayer # Animations
+@onready var pause_menu = preload("res://scenes/PauseMenu.tscn").instantiate()
 
 const FLOOR_Y_POSITION := 0.561
 const SAFETY_MARGIN := 0.1
@@ -23,6 +24,8 @@ var gravity := 20.0
 var jump_force := 8.0
 
 func _ready():
+	add_child(pause_menu)
+	pause_menu.hide()
 	target_x = global_position.x
 	add_to_group("player")
 	var run_anim = anim_player.get_animation("Running")
@@ -30,6 +33,9 @@ func _ready():
 	anim_player.play("Running")  # Test immediately
 
 func _unhandled_input(event):
+	if event.is_action_pressed("ui_cancel"):  # Escape key by default
+		get_tree().paused = !get_tree().paused
+		$PauseMenu.visible = get_tree().paused
 	if event.is_action_pressed("ui_left") and lane_index > -1:
 		lane_index -= 1
 		target_x = lane_index * lane_offset
