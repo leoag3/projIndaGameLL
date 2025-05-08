@@ -7,15 +7,18 @@ func _ready():
 
 func unpause():
 	get_tree().paused = false
+	GameState.is_paused = false
 	hide()
 	get_viewport().set_input_as_handled()
 
 func go_to_main_menu():
 	get_tree().paused = false  # Important!
+	GameState.is_paused = false
 	get_tree().change_scene_to_file("res://scenes/StartMenu.tscn")
 
 func restart_level():
 	get_tree().paused = false
+	GameState.is_paused = false
 	get_tree().reload_current_scene()
 
 func _input(event):

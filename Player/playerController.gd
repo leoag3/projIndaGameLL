@@ -44,6 +44,7 @@ func _unhandled_input(event):
 		if event.is_action_pressed("ui_cancel"):  # Escape key by default
 			get_tree().paused = !get_tree().paused
 			$PauseMenu.visible = get_tree().paused
+			GameState.is_paused = true
 		if event.is_action_pressed("ui_left") and lane_index > -1:
 			lane_index -= 1
 			target_x = lane_index * lane_offset

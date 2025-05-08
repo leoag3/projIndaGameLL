@@ -1,6 +1,7 @@
 extends Node
 
 var is_crashed := false
+var is_paused = false
 
 func crash():
 	is_crashed = true
