@@ -7,6 +7,9 @@
 
 [resource]
 albedo_texture = ExtResource("1_gnsqt")
+emission_enabled = true
+emission = Color(0.998367, 5.48691e-06, 1.73271e-06, 1)
+emission_energy_multiplier = 1.65
 normal_enabled = true
 normal_texture = ExtResource("4_occ48")
 rim_enabled = true

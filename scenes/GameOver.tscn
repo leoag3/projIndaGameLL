@@ -1,20 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bvbr3q24os6tx"]
+[gd_scene load_steps=2 format=3 uid="uid://drc8mdrc0ylxm"]
 
-[ext_resource type="Script" uid="uid://v5vchgpcdc2q" path="res://scenes/Menu scripts/pause_menu.gd" id="1_jvnd5"]
+[ext_resource type="Script" uid="uid://bl47ibd8qqbsv" path="res://scenes/Menu scripts/gameover.gd" id="1_6bcno"]
 
-[sub_resource type="GDScript" id="GDScript_g4jo0"]
-script/source = "extends Button
-
-func _ready():
-	pass
-
-func _on_Start_pressed():
-	get_tree().change_scene(\"res://scene.tscn\")
-"
-
-[node name="PauseMenu" type="CanvasLayer"]
-process_mode = 2
-script = ExtResource("1_jvnd5")
+[node name="GameOver" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_6bcno")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -39,11 +29,6 @@ grow_vertical = 2
 size_flags_horizontal = 4
 alignment = 2
 
-[node name="ResumeButton" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "Resume game"
-script = SubResource("GDScript_g4jo0")
-
 [node name="RestartButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Restart"
@@ -56,14 +41,12 @@ text = "Main menu"
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -199.0
-offset_right = 26.0
-offset_bottom = 179.0
+offset_left = -315.0
+offset_top = 65.0
+offset_right = 80.0
+offset_bottom = 172.0
 grow_horizontal = 2
 scale = Vector2(1.75141, 1.6128)
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 64
-text = "Paused
-"
-
-[connection signal="pressed" from="VBoxContainer/RestartButton" to="." method="restart_level"]
+text = "GAME OVER"

@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @onready var anim_player = $AnimatedVisuals/CharacterFix/AnimationPlayer # Animations
 @onready var pause_menu = preload("res://scenes/PauseMenu.tscn").instantiate()
+@onready var game_over = preload("res://scenes/GameOver.tscn").instantiate()
 
 const FLOOR_Y_POSITION := 0.561
 const SAFETY_MARGIN := 0.1
@@ -9,6 +10,10 @@ const SAFETY_MARGIN := 0.1
 enum AnimState { RUNNING, JUMPING, SLIDING }
 var current_anim_state = AnimState.RUNNING
 var was_in_air := false
+
+var has_played_crash_animation = false
+var has_applied_crash_bounce = false
+var crash_bounce_force = Vector3(0, 7, 6)  # Negative X or Z = backwards, Y = upward bounce
 
 var lane_offset := 3.0
 var lane_index := 0
@@ -26,6 +31,8 @@ var jump_force := 8.0
 func _ready():
 	add_child(pause_menu)
 	pause_menu.hide()
+	add_child(game_over)
+	game_over.hide()
 	target_x = global_position.x
 	add_to_group("player")
 	var run_anim = anim_player.get_animation("Running")
@@ -33,29 +40,31 @@ func _ready():
 	anim_player.play("Running")  # Test immediately
 
 func _unhandled_input(event):
-	if event.is_action_pressed("ui_cancel"):  # Escape key by default
-		get_tree().paused = !get_tree().paused
-		$PauseMenu.visible = get_tree().paused
-	if event.is_action_pressed("ui_left") and lane_index > -1:
-		lane_index -= 1
-		target_x = lane_index * lane_offset
-	elif event.is_action_pressed("ui_right") and lane_index < 1:
-		lane_index += 1
-		target_x = lane_index * lane_offset
-	elif event.is_action_pressed("ui_up") and is_on_floor():
-		uncrouch()  # Exit crouch if jumping
-		velocity.y = jump_force
-		current_anim_state = AnimState.JUMPING
-		$AnimatedVisuals/CharacterFix/AnimationPlayer.play("Jump")  # Trigger jump animation
-	elif event.is_action_pressed("ui_down"):
-		if is_on_floor():
-			crouch()
-			current_anim_state = AnimState.SLIDING
-			$AnimatedVisuals/CharacterFix/AnimationPlayer.play("Sliding")  # Trigger slide animation
-		else:
-			# Slam down mid-air
-			velocity.y = -jump_force * 1.5 #Tweak for feel
-			wants_to_crouch_on_landing = true
+	if not GameState.is_crashed:
+		if event.is_action_pressed("ui_cancel"):  # Escape key by default
+			get_tree().paused = !get_tree().paused
+			$PauseMenu.visible = get_tree().paused
+			GameState.is_paused = true
+		if event.is_action_pressed("ui_left") and lane_index > -1:
+			lane_index -= 1
+			target_x = lane_index * lane_offset
+		elif event.is_action_pressed("ui_right") and lane_index < 1:
+			lane_index += 1
+			target_x = lane_index * lane_offset
+		elif event.is_action_pressed("ui_up") and is_on_floor():
+			uncrouch()  # Exit crouch if jumping
+			velocity.y = jump_force
+			current_anim_state = AnimState.JUMPING
+			$AnimatedVisuals/CharacterFix/AnimationPlayer.play("Jump")  # Trigger jump animation
+		elif event.is_action_pressed("ui_down"):
+			if is_on_floor():
+				crouch()
+				current_anim_state = AnimState.SLIDING
+				$AnimatedVisuals/CharacterFix/AnimationPlayer.play("Sliding")  # Trigger slide animation
+			else:
+				# Slam down mid-air
+				velocity.y = -jump_force * 1.5 #Tweak for feel
+				wants_to_crouch_on_landing = true
 
 
 func crouch():
@@ -80,7 +89,20 @@ func uncrouch():
 			crouch_timer.timeout.disconnect(uncrouch)
 
 func _physics_process(delta):
-	# Smooth horizontal lane movement
+	# Handle crash bounce
+	if GameState.is_crashed:
+		if not has_applied_crash_bounce:
+			velocity = crash_bounce_force
+			has_applied_crash_bounce = true
+		else:
+			velocity.y -= gravity * delta  # Continue applying gravity after bounce
+			velocity.z = velocity.z * 0.96
+
+		move_and_slide()
+		handle_animation_states()
+		return
+
+	# Smooth horizontal lane movement (assuming target_x is world X-axis)
 	var new_x = lerp(global_position.x, target_x, delta * move_speed)
 	global_position.x = new_x
 
@@ -95,17 +117,24 @@ func _physics_process(delta):
 		if wants_to_crouch_on_landing:
 			crouch()
 			wants_to_crouch_on_landing = false
-	# Apply velocity with built-in movement
-		
+
+	# Apply velocity
 	move_and_slide()
-	
+
+	# Floor safety check
 	if global_position.y < FLOOR_Y_POSITION:
 		global_position.y = FLOOR_Y_POSITION + SAFETY_MARGIN
 		velocity.y = 0
-	
+
 	handle_animation_states()
 
 func handle_animation_states():
+	if GameState.is_crashed:
+		if not has_played_crash_animation:
+			$AnimatedVisuals/CharacterFix/AnimationPlayer.play("Sliding")
+			has_played_crash_animation = true
+			$GameOver.visible = true
+		return  # Exit early so no other animations are processed
 	if !is_on_floor():
 		was_in_air = true
 		if current_anim_state != AnimState.JUMPING:
