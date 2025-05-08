@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Settings="*res://Settings.gd"
 MusicManager="*res://scenes/MusicManager.tscn"
+GameState="*res://ObstacleHandling/gameState.gd"
 
 [input]
 

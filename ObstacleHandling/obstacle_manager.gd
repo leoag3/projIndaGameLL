@@ -9,7 +9,7 @@ extends Node3D
 @export var cart_length := 12.0
 @export var min_train_length := 2
 @export var max_train_length := 15
-@export var base_ramp_chance := 0.3
+@export var base_ramp_chance := 0.0
 @export var min_spawn_delay := 0.1
 @export var max_spawn_delay := 0.8
 
@@ -66,8 +66,8 @@ func spawn_roadblock(lane: int) -> void:
 	var roadblock = roadblock_scene.instantiate()
 	add_child(roadblock)
 
-	var position = Vector3(lane * lane_offset, roadblock_height_offset, spawn_distance + randf_range(10, 30))
-	roadblock.global_position = position
+	var positionn = Vector3(lane * lane_offset, roadblock_height_offset, spawn_distance + randf_range(10, 30))
+	roadblock.global_position = positionn
 
 	if roadblock.has_method("set_speed"):
 		roadblock.set_speed(obstacle_speed)
