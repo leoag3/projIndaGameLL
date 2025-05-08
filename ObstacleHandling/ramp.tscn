@@ -1,14 +1,36 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmba2rbs8q2n0"]
+[gd_scene load_steps=9 format=3 uid="uid://dmba2rbs8q2n0"]
 
 [ext_resource type="Script" uid="uid://ch6u174d4ipem" path="res://ObstacleHandling/obstacle.gd" id="1_80udx"]
-[ext_resource type="Material" uid="uid://i164vl48xg15" path="res://Materials/diamondPlateAluminum/diamondAluminum.tres" id="2_te56l"]
+[ext_resource type="Texture2D" uid="uid://c1oq222qfqc1t" path="res://Materials/diamondPlateAluminum/diamondplate_tex.png" id="2_xcl46"]
+[ext_resource type="Texture2D" uid="uid://b8ol0vdnfe3j0" path="res://Materials/diamondPlateAluminum/diamondplate_spec.png" id="3_vj2wy"]
+[ext_resource type="Texture2D" uid="uid://cyfvhu73bi6kx" path="res://Materials/diamondPlateAluminum/diamondplate.png" id="4_ahii8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_av2hv"]
+resource_name = "diamondAluminum"
+albedo_texture = ExtResource("2_xcl46")
+metallic = 0.65
+metallic_specular = 0.4
+metallic_texture = ExtResource("3_vj2wy")
+metallic_texture_channel = 4
+roughness = 0.3
+normal_enabled = true
+normal_texture = ExtResource("4_ahii8")
+uv1_scale = Vector3(1.02, 1, 1.02)
+uv1_triplanar = true
+uv1_triplanar_sharpness = 10.1964
+uv2_scale = Vector3(0.25, 0.25, 0.25)
+uv2_triplanar = true
+uv2_triplanar_sharpness = 8.28211
 
 [sub_resource type="PrismMesh" id="PrismMesh_80udx"]
-material = ExtResource("2_te56l")
+material = SubResource("StandardMaterial3D_av2hv")
 left_to_right = 1.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_m7jmp"]
 size = Vector3(12.375, 0.045, 2.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_te56l"]
+size = Vector3(2.5, 1.595, 6.345)
 
 [node name="Ramp" type="StaticBody3D"]
 script = ExtResource("1_80udx")
@@ -20,3 +42,7 @@ mesh = SubResource("PrismMesh_80udx")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.18678e-08, 1.25609e-08, 1, 0.287361, 0.957823, 0, -0.957823, 0.287361, -4.37114e-08, -2.13167e-09, 1.79081, -0.048767)
 shape = SubResource("BoxShape3D_m7jmp")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.82169, -2.79141)
+shape = SubResource("BoxShape3D_te56l")

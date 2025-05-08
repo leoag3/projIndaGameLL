@@ -11,9 +11,9 @@ extends Node3D
 @export var max_train_length := 15
 @export var base_ramp_chance := 0.0
 @export var min_spawn_delay := 0.1
-@export var max_spawn_delay := 0.8
+@export var max_spawn_delay := 0.7
 
-@export var empty_lane_chance := 0.4  # 0.0 = never skip, 1.0 = always skip (unrealistic)
+@export var empty_lane_chance := 0.3  # 0.0 = never skip, 1.0 = always skip (unrealistic)
 @export var roadblock_chance := 1.0  # Chance of roadblock appearing in empty lane
 @export var roadblock_height_offset := 0.0  # tweak if needd
 
@@ -50,10 +50,7 @@ func async_func(lane: int) -> void:
 		if randf() < empty_lane_chance:
 			# ...maybe spawn a roadblock instead
 			if randf() < roadblock_chance:
-				busy_lanes[lane] = true  # Mark lane busy for roadblock
 				spawn_roadblock(lane)
-				var delay = (abs(spawn_distance) - 50.0) / obstacle_speed + randf_range(1.0, 2.0)
-				free_lane_after_delay(lane, delay)
 			continue
 
 		spawn_train(lane, must_ramp)
@@ -108,26 +105,11 @@ func free_lane_after_delay(lane: int, delay: float) -> void:
 	busy_lanes[lane] = false
 
 func should_force_ramp(lane: int) -> bool:
-	var occupied = busy_lanes.values().count(true)
+	# Get the other two lanes
+	var other_lanes = lanes.filter(func(l): return l != lane)
 
-	# If this is the only open lane, force ramp
-	if occupied >= 2 and not busy_lanes[lane]:
+	# If both other lanes are currently blocked, we must include a ramp in this lane
+	if busy_lanes[other_lanes[0]] and busy_lanes[other_lanes[1]]:
 		return true
-
-	# Get player's current lane
-	if player != null and player.has_method("get_lane_index"):
-		var player_lane = player.get_lane_index()
-
-		# If the player is on the left and mid is blocked, force ramp on left
-		if player_lane == -1 and busy_lanes[0] and lane == -1:
-			return true
-
-		# If the player is on the right and mid is blocked, force ramp on right
-		if player_lane == 1 and busy_lanes[0] and lane == 1:
-			return true
-
-		# If the player is in mid and both sides are blocked, force ramp mid
-		if player_lane == 0 and busy_lanes[-1] and busy_lanes[1] and lane == 0:
-			return true
 
 	return false

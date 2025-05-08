@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @onready var anim_player = $AnimatedVisuals/CharacterFix/AnimationPlayer # Animations
 @onready var pause_menu = preload("res://scenes/PauseMenu.tscn").instantiate()
+@onready var game_over = preload("res://scenes/GameOver.tscn").instantiate()
 
 const FLOOR_Y_POSITION := 0.561
 const SAFETY_MARGIN := 0.1
@@ -30,6 +31,8 @@ var jump_force := 8.0
 func _ready():
 	add_child(pause_menu)
 	pause_menu.hide()
+	add_child(game_over)
+	game_over.hide()
 	target_x = global_position.x
 	add_to_group("player")
 	var run_anim = anim_player.get_animation("Running")
@@ -129,6 +132,7 @@ func handle_animation_states():
 		if not has_played_crash_animation:
 			$AnimatedVisuals/CharacterFix/AnimationPlayer.play("Sliding")
 			has_played_crash_animation = true
+			$GameOver.visible = true
 		return  # Exit early so no other animations are processed
 	if !is_on_floor():
 		was_in_air = true
